@@ -1,0 +1,15 @@
+server:
+  module: 'build/example-plugin.so'
+  listen:
+    unix:
+      enabled: true
+      protocol: 'json'
+      socket: 'net-server.socket'
+    tcp:
+      enabled: true
+      protocol: 'proto'
+      port: 15252
+    http:
+      enabled: true
+      protocol: 'json'
+      port: 8080

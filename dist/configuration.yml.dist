@@ -1,0 +1,15 @@
+server:
+  module: ""
+  listen:
+    unix:
+      enabled: true
+      protocol: 'proto'
+      socket: '/var/run/net-server.socket'
+    tcp:
+      enabled: true
+      protocol: 'proto'
+      port: 15252
+    http:
+      enabled: true
+      protocol: 'json'
+      port: 8080

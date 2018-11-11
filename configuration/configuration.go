@@ -30,7 +30,7 @@ type Configuration struct {
 	} `yaml:"server"`
 }
 
-func loadDefaultConfigValues(configuration *Configuration) {
+func DefaultConfiguration() (configuration Configuration) {
 	configuration.Server.Listen.Http.Enabled = true
 	configuration.Server.Listen.Http.Port = 8080
 	configuration.Server.Listen.Http.Protocol = "json"
@@ -42,6 +42,8 @@ func loadDefaultConfigValues(configuration *Configuration) {
 	configuration.Server.Listen.Unix.Enabled = true
 	configuration.Server.Listen.Unix.Protocol = "proto"
 	configuration.Server.Listen.Unix.Socket = "/var/run/net-server.socket"
+
+	return configuration
 }
 
 func ReadConf(path string) (configuration Configuration, mapSlice yaml.MapSlice) {
@@ -66,7 +68,7 @@ func ReadConf(path string) (configuration Configuration, mapSlice yaml.MapSlice)
 
 	if err != nil {
 		log.WithField("Configuration file", path).Warn("Failed to read configuration file")
-		loadDefaultConfigValues(&configuration)
+		configuration = DefaultConfiguration()
 	} else {
 		log.WithField("Configuration file", path).Info("Reading configuration file")
 
@@ -74,7 +76,7 @@ func ReadConf(path string) (configuration Configuration, mapSlice yaml.MapSlice)
 		yaml.Unmarshal(bytes, &mapSlice)
 		if err != nil {
 			log.Warn("Failed to read configuration file, reading default")
-			loadDefaultConfigValues(&configuration)
+			configuration = DefaultConfiguration()
 		}
 	}
 

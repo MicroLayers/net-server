@@ -4,34 +4,35 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	yaml "gopkg.in/yaml.v2"
 )
 
 type netServerModuleMock struct {
-	jsonHandler  func(string, []byte) []byte
-	protoHandler func(string, []byte) []byte
+	jsonHandler  func(yaml.MapSlice, []byte) []byte
+	protoHandler func(yaml.MapSlice, []byte) []byte
 }
 
-func (m *netServerModuleMock) HandleJson(configurationPath string, bytes []byte) []byte {
-	return m.jsonHandler(configurationPath, bytes)
+func (m *netServerModuleMock) HandleJson(configMapSlice yaml.MapSlice, bytes []byte) []byte {
+	return m.jsonHandler(configMapSlice, bytes)
 }
 
-func (m *netServerModuleMock) HandleProto(configurationPath string, bytes []byte) []byte {
-	return m.protoHandler(configurationPath, bytes)
+func (m *netServerModuleMock) HandleProto(configMapSlice yaml.MapSlice, bytes []byte) []byte {
+	return m.protoHandler(configMapSlice, bytes)
 }
 
 func getEchoModMock(
 	t *testing.T,
 	expectedJSONResponse []byte,
 	expectedProtoResponse []byte,
-	configPath string,
+	configMapSlice yaml.MapSlice,
 ) *netServerModuleMock {
 	return &netServerModuleMock{
-		jsonHandler: func(confPath string, bytes []byte) []byte {
-			assert.Equal(t, configPath, confPath)
+		jsonHandler: func(confMapSlice yaml.MapSlice, bytes []byte) []byte {
+			assert.Equal(t, configMapSlice, confMapSlice)
 			return bytes
 		},
-		protoHandler: func(confPath string, bytes []byte) []byte {
-			assert.Equal(t, configPath, confPath)
+		protoHandler: func(confMapSlice yaml.MapSlice, bytes []byte) []byte {
+			assert.Equal(t, configMapSlice, confMapSlice)
 			return bytes
 		},
 	}

@@ -4,6 +4,8 @@ import (
 	"context"
 	"net"
 	"net-server/module"
+
+	yaml "gopkg.in/yaml.v2"
 )
 
 func ListenTCP(
@@ -11,7 +13,7 @@ func ListenTCP(
 	mod module.NetServerModule,
 	listeningAddress string,
 	messageType string,
-	configPath string,
+	configMapSlice yaml.MapSlice,
 ) error {
 	listener, err := net.Listen("tcp", listeningAddress)
 
@@ -27,5 +29,5 @@ func ListenTCP(
 
 	tcpListener := NewSocketListener(ctx, listener, mod)
 
-	return tcpListener.Listen(messageType, configPath)
+	return tcpListener.Listen(messageType, configMapSlice)
 }

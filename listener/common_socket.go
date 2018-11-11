@@ -9,6 +9,7 @@ import (
 	"sync"
 
 	log "github.com/sirupsen/logrus"
+	yaml "gopkg.in/yaml.v2"
 )
 
 type SocketListener struct {
@@ -17,7 +18,7 @@ type SocketListener struct {
 	Module   module.NetServerModule
 }
 
-func (l *SocketListener) Listen(messageType string, configPath string) error {
+func (l *SocketListener) Listen(messageType string, configMapSlice yaml.MapSlice) error {
 	messageProcessingWaitGroup := sync.WaitGroup{}
 	for true {
 		conn, err := l.Listener.Accept()
@@ -72,10 +73,10 @@ func (l *SocketListener) Listen(messageType string, configPath string) error {
 				var response []byte
 				switch messageType {
 				case module.MessageTypeJson:
-					response = l.Module.HandleJson(configPath, message)
+					response = l.Module.HandleJson(configMapSlice, message)
 					break
 				case module.MessageTypeProto:
-					response = l.Module.HandleProto(configPath, message)
+					response = l.Module.HandleProto(configMapSlice, message)
 					break
 				}
 

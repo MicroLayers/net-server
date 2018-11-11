@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	yaml "gopkg.in/yaml.v2"
 )
 
 func getFreeTCPPort() (int, error) {
@@ -29,16 +30,16 @@ func getFreeTCPPort() (int, error) {
 func TestTCPListenerWillListenOnTCPPort(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	expectedResponse := []byte{1, 2, 3, 4, 5}
-	configPath := "whatever"
+	configMapSlice := yaml.MapSlice{yaml.MapItem{Key: "var", Value: "val"}}
 	messageType := module.MessageTypeJson
 	freePort, err := getFreeTCPPort()
 	assert.NoError(t, err)
 	listeningAddress := fmt.Sprintf("localhost:%d", freePort)
 
-	mod := getEchoModMock(t, expectedResponse, expectedResponse, configPath)
+	mod := getEchoModMock(t, expectedResponse, expectedResponse, configMapSlice)
 
 	go func() {
-		err = listener.ListenTCP(ctx, mod, listeningAddress, messageType, configPath)
+		err = listener.ListenTCP(ctx, mod, listeningAddress, messageType, configMapSlice)
 		assert.NoError(t, err, "The listener should terminate in a clean way")
 	}()
 
@@ -57,7 +58,6 @@ func TestTCPListenerWillListenOnTCPPort(t *testing.T) {
 	assert.Equal(t, len(expectedResponse), numBytesRead)
 	assert.NoError(t, err, "The server should send the expected response size")
 
-	fmt.Println(buffer)
 	message := buffer[:numBytesRead]
 	assert.Equal(t, expectedResponse, message, "The server should send the expected response back")
 

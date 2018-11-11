@@ -1,14 +1,13 @@
 language: go
-
 go:
   - 1.11.x
+env:
+  - GO111MODULE=on
 
 before_install:
   - go mod download
-
 script:
   - ./test.sh
-
 after_success:
   - mv build/coverage.txt .
   - bash <(curl -s https://codecov.io/bash)

@@ -1,5 +1,6 @@
 # NetServer
 [![Build Status](http://drone.giacomofurlan.name/api/badges/MicroLayers/net-server/status.svg?branch=master)](http://drone.giacomofurlan.name/MicroLayers/net-server)
+[![codecov](https://codecov.io/gh/MicroLayers/net-server/branch/master/graph/badge.svg)](https://codecov.io/gh/MicroLayers/net-server)
 
 This server aims to simplify the creation of micro services listening on TCP or
 Unix socket, using JSON or Protobuf as message protocol, letting the developer

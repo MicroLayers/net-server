@@ -55,7 +55,7 @@ func TestReadConfWillReadTheConfigurationFromTheDefaultPath(t *testing.T) {
 	path := filepath.Join(pwd, "configuration.yml")
 
 	config, confMapSlice := createTempTestConfiguration(t, path)
-	readConfig, mapSlice := configuration.ReadConf(path)
+	readConfig, mapSlice := configuration.ReadConf("")
 
 	assert.Equal(t, config, readConfig, "The written and read configurations should match")
 	assert.Equal(t, confMapSlice, mapSlice, "The written and read MapSlice configurations should match")

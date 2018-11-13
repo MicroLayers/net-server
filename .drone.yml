@@ -6,6 +6,12 @@ pipeline:
       - go mod download
     volumes:
       - gopath:/go
+  run-linter:
+    image: microlayers/golang-with-extras:1.11.2-stretch
+    commands:
+      - ./lint.sh
+    volumes:
+      - gopath:/root/go
   run-tests:
     image: microlayers/golang-with-extras:1.11.2-stretch
     commands:

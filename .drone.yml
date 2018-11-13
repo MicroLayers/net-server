@@ -1,0 +1,23 @@
+pipeline:
+  install-deps:
+    image: microlayers/golang-with-extras:1.11.2-stretch
+    pull: true
+    commands:
+      - go mod download
+    volumes:
+      - gopath:/go
+  run-tests:
+    image: microlayers/golang-with-extras:1.11.2-stretch
+    commands:
+      - ./test.sh
+    volumes:
+      - gopath:/root/go
+  upload-coverage:
+    image: microlayers/golang-with-extras:1.11.2-stretch
+    secrets:
+      - net_server_codecov_token
+    commands:
+      - bash -c "bash <(curl -s https://codecov.io/bash)" -t $NET_SERVER_CODECOV_TOKEN
+
+images:
+  gopath:

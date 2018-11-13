@@ -6,7 +6,7 @@
     "module/examples"
   ],
   "Severity": {
-    "maligned": "error"
+    "maligned": "warning"
   },
   "Cyclo": 12,
   "Errors": false,

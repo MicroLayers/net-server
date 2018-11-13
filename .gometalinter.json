@@ -5,6 +5,9 @@
   "Exclude": [
     "module/examples"
   ],
+  "Severity": {
+    "maligned": "error"
+  },
   "Cyclo": 12,
   "Errors": false,
   "Deadline": "5m"

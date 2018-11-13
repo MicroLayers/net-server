@@ -74,8 +74,8 @@ func main() {
 	configuration, confMapSlice := configuration.ReadConf(configPath)
 
 	log.WithFields(log.Fields{
-		"Listen.Http.Enabled": configuration.Server.Listen.Http.Enabled,
-		"Listen.Tcp.Enabled":  configuration.Server.Listen.Tcp.Enabled,
+		"Listen.Http.Enabled": configuration.Server.Listen.HTTP.Enabled,
+		"Listen.Tcp.Enabled":  configuration.Server.Listen.TCP.Enabled,
 		"Listen.Unix.Enabled": configuration.Server.Listen.Unix.Enabled,
 		"Module":              configuration.Server.Module,
 	}).Info("Loaded base configuration data")

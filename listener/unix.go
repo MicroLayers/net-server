@@ -9,6 +9,8 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+// ListenUnix listen to a Unix socket,
+// managing the messages via the provided module
 func ListenUnix(
 	ctx context.Context,
 	mod module.NetServerModule,

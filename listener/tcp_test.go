@@ -33,7 +33,7 @@ func TestTCPListenerWillListenOnTCPPort(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	expectedResponse := []byte{1, 2, 3, 4, 5}
 	configMapSlice := yaml.MapSlice{yaml.MapItem{Key: "var", Value: "val"}}
-	messageType := module.MessageTypeJson
+	messageType := module.MessageTypeJSON
 	freePort, err := getFreeTCPPort()
 	assert.NoError(t, err)
 	listeningAddress := fmt.Sprintf("localhost:%d", freePort)

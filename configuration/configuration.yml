@@ -7,9 +7,9 @@ server:
       socket: /dir/my.sock
     tcp:
       enabled: true
-      protocol: vdm
       port: 62546
+      protocol: vdm
     http:
       enabled: false
-      protocol: ""
       port: 0
+      protocol: ""

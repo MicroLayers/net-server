@@ -1,4 +1,5 @@
 *.so
 /coverage.txt
 /build
+/bin
 /net-server

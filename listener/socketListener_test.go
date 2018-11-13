@@ -41,7 +41,7 @@ func TestSocketListener_WillListenForJSONMessages(t *testing.T) {
 
 	waitGroup.Add(1)
 	go func() {
-		listenerErr = listener.Listen(module.MessageTypeJson, configMapSlice)
+		listenerErr = listener.Listen(module.MessageTypeJSON, configMapSlice)
 
 		waitGroup.Done()
 	}()

@@ -7,16 +7,20 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-const MessageTypeJson = "json"
+// MessageTypeJSON message type JSON
+const MessageTypeJSON = "json"
+
+// MessageTypeProto message type protobuf
 const MessageTypeProto = "proto"
 
-// NetServerPlugin add features to the main server
+// NetServerModule add features to the main server
 // exported objects must be named
 type NetServerModule interface {
-	HandleJson(yaml.MapSlice, []byte) []byte  // ProtoHandler add support for protobuf messages
-	HandleProto(yaml.MapSlice, []byte) []byte // JsonHandler add support for JSON messages
+	HandleJson(yaml.MapSlice, []byte) []byte  // HandleJson add support for JSON messages
+	HandleProto(yaml.MapSlice, []byte) []byte // HandleProto add support for protobuf messages
 }
 
+// LoadModule load the NetServerModule from the given path
 func LoadModule(path string) (NetServerModule, error) {
 	plug, err := plugin.Open(path)
 

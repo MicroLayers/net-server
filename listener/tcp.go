@@ -8,6 +8,8 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+// ListenTCP listen to a TCP port,
+// managing the messages via the provided module
 func ListenTCP(
 	ctx context.Context,
 	mod module.NetServerModule,

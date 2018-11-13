@@ -20,7 +20,7 @@ func TestUnixListenerWillListenOnUnixSocket(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	expectedResponse := []byte{1, 2, 3, 4, 5}
 	configMapSlice := yaml.MapSlice{yaml.MapItem{Key: "var", Value: "val"}}
-	messageType := module.MessageTypeJson
+	messageType := module.MessageTypeJSON
 	tmpDir, err := ioutil.TempDir(os.TempDir(), "net-server_")
 	assert.NoError(t, err, "The test should successfully create a temporary directory")
 	defer os.RemoveAll(tmpDir)

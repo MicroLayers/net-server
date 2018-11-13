@@ -18,6 +18,10 @@ pipeline:
       - ./test.sh
     volumes:
       - gopath:/root/go
+  run-build:
+    image: microlayers/golang-with-extras:1.11.2-stretch
+    commands:
+      - go build
   upload-coverage:
     image: microlayers/golang-with-extras:1.11.2-stretch
     secrets:

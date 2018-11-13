@@ -17,9 +17,9 @@ func createTempTestConfiguration(t *testing.T, path string) (configuration.Confi
 	config.Server.Listen.Unix.Enabled = false
 	config.Server.Listen.Unix.Protocol = "whatever"
 	config.Server.Listen.Unix.Socket = "/dir/my.sock"
-	config.Server.Listen.Tcp.Enabled = true
-	config.Server.Listen.Tcp.Protocol = "vdm"
-	config.Server.Listen.Tcp.Port = uint16(62546)
+	config.Server.Listen.TCP.Enabled = true
+	config.Server.Listen.TCP.Protocol = "vdm"
+	config.Server.Listen.TCP.Port = uint16(62546)
 
 	confBytes, err := yaml.Marshal(config)
 	assert.NoError(t, err, "YAML package should correctly marshal the configuration")

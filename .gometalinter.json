@@ -1,0 +1,10 @@
+{
+  "Disable": [
+    "errcheck"
+  ],
+  "Exclude": [
+    "module/examples"
+  ],
+  "Cyclo": 12,
+  "Errors": false
+}

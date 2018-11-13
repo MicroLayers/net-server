@@ -7,6 +7,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+// Configuration the net-server configuration struct
 type Configuration struct {
 	Server struct {
 		Module string `yaml:"module"`
@@ -16,28 +17,31 @@ type Configuration struct {
 				Protocol string `yaml:"protocol"`
 				Socket   string `yaml:"socket"`
 			} `yaml:"unix"`
-			Tcp struct {
+
+			TCP struct {
 				Enabled  bool   `yaml:"enabled"`
-				Protocol string `yaml:"protocol"`
 				Port     uint16 `yaml:"port"`
+				Protocol string `yaml:"protocol"`
 			} `yaml:"tcp"`
-			Http struct {
+
+			HTTP struct {
 				Enabled  bool   `yaml:"enabled"`
-				Protocol string `yaml:"protocol"`
 				Port     uint16 `yaml:"port"`
+				Protocol string `yaml:"protocol"`
 			} `yaml:"http"`
 		} `yaml:"listen"`
 	} `yaml:"server"`
 }
 
+// DefaultConfiguration get the default net server's configuration
 func DefaultConfiguration() (configuration Configuration) {
-	configuration.Server.Listen.Http.Enabled = true
-	configuration.Server.Listen.Http.Port = 8080
-	configuration.Server.Listen.Http.Protocol = "json"
+	configuration.Server.Listen.HTTP.Enabled = true
+	configuration.Server.Listen.HTTP.Port = 8080
+	configuration.Server.Listen.HTTP.Protocol = "json"
 
-	configuration.Server.Listen.Tcp.Enabled = true
-	configuration.Server.Listen.Tcp.Port = 15252
-	configuration.Server.Listen.Tcp.Protocol = "proto"
+	configuration.Server.Listen.TCP.Enabled = true
+	configuration.Server.Listen.TCP.Port = 15252
+	configuration.Server.Listen.TCP.Protocol = "proto"
 
 	configuration.Server.Listen.Unix.Enabled = true
 	configuration.Server.Listen.Unix.Protocol = "proto"
@@ -46,6 +50,7 @@ func DefaultConfiguration() (configuration Configuration) {
 	return configuration
 }
 
+// ReadConf read the net server's configuration from the provided path
 func ReadConf(path string) (configuration Configuration, mapSlice yaml.MapSlice) {
 	bytes, err := ioutil.ReadFile(path)
 	if path == "" {
@@ -73,7 +78,9 @@ func ReadConf(path string) (configuration Configuration, mapSlice yaml.MapSlice)
 		log.WithField("Configuration file", path).Info("Reading configuration file")
 
 		err = yaml.Unmarshal(bytes, &configuration)
-		yaml.Unmarshal(bytes, &mapSlice)
+		if err == nil {
+			err = yaml.Unmarshal(bytes, &mapSlice)
+		}
 		if err != nil {
 			log.Warn("Failed to read configuration file, reading default")
 			configuration = DefaultConfiguration()

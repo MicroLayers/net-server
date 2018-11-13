@@ -3,7 +3,8 @@
 set -e
 export PATH=$HOME/go/bin:$PATH
 
-if [ $(which gometalinter 2>/dev/null) == "" ]; then
+hasExecutable=$(which gometalinter 2>/dev/null)
+if [ "$hasExecutable" == "" ]; then
   curl -L https://git.io/vp6lP | sh
   mv ./bin/* "$FOME/go/bin/"
   pushd $HOME

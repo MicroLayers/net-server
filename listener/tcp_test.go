@@ -8,6 +8,7 @@ import (
 	"net-server/listener"
 	"net-server/module"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	yaml "gopkg.in/yaml.v2"
@@ -24,6 +25,7 @@ func getFreeTCPPort() (int, error) {
 		return 0, err
 	}
 	defer l.Close()
+
 	return l.Addr().(*net.TCPAddr).Port, nil
 }
 
@@ -42,6 +44,8 @@ func TestTCPListenerWillListenOnTCPPort(t *testing.T) {
 		err = listener.ListenTCP(ctx, mod, listeningAddress, messageType, configMapSlice)
 		assert.NoError(t, err, "The listener should terminate in a clean way")
 	}()
+
+	time.Sleep(time.Second) // Ensure we give the listener the time to startup
 
 	clientConn, err := net.Dial("tcp", listeningAddress)
 	assert.NoError(t, err)

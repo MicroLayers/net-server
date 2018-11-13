@@ -6,5 +6,6 @@
     "module/examples"
   ],
   "Cyclo": 12,
-  "Errors": false
+  "Errors": false,
+  "Deadline": "5m"
 }

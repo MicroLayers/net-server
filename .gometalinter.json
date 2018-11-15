@@ -3,7 +3,8 @@
     "errcheck"
   ],
   "Exclude": [
-    "module/examples"
+    "module/examples",
+    "vendor"
   ],
   "Severity": {
     "maligned": "warning"

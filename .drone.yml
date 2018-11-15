@@ -3,31 +3,43 @@ pipeline:
     image: microlayers/golang-with-extras:1.11.2-stretch
     pull: true
     commands:
-      - go mod download
+      - go install
     volumes:
       - gopath:/go
-  run-build:
-    image: microlayers/golang-with-extras:1.11.2-stretch
-    commands:
-      - go build
+
   run-linter:
+    group: tests
     image: microlayers/golang-with-extras:1.11.2-stretch
     commands:
       - ./lint.sh
     volumes:
       - gopath:/root/go
+
   run-tests:
+    group: tests
     image: microlayers/golang-with-extras:1.11.2-stretch
     commands:
       - ./test.sh
     volumes:
       - gopath:/root/go
+
   upload-coverage:
+    group: post-tests
     image: microlayers/golang-with-extras:1.11.2-stretch
     secrets:
       - codecov_token
     commands:
       - bash -c "bash <(curl -s https://codecov.io/bash)"
+    volumes:
+      - gopath:/root/go
+
+  run-build:
+    group: post-tests
+    image: microlayers/golang-with-extras:1.11.2-stretch
+    commands:
+      - go build
+    volumes:
+      - gopath:/root/go
 
 images:
   gopath:

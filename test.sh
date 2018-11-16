@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -e
+set -x
+
 export BUILD_ARGS="-race"
 
 # First compile the echo module (required for module tests)

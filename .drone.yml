@@ -3,15 +3,21 @@ pipeline:
     image: microlayers/golang-with-extras:1.11.2-stretch
     pull: true
     commands:
-      - go install
+      - go mod download
     volumes:
       - gopath:/go
 
   run-linter:
     group: tests
     image: microlayers/golang-with-extras:1.11.2-stretch
+    environment:
+      - "GOBIN=/root/go/bin"
+      - "LINTER_VERSION=v2.0.11"
     commands:
-      - ./lint.sh
+      - export PATH="$GOBIN:$PATH"
+      - curl -L https://git.io/vp6lP | bash -s -- -b $GOBIN
+      # https://github.com/golang/go/issues/24661
+      - gometalinter ./... -Dgotype -Dgotypex -Dmaligned -Dunconvert -Dinterfacer -Dmegacheck -Dstructcheck -Dvarcheck
     volumes:
       - gopath:/root/go
 

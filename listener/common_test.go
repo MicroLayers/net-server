@@ -13,7 +13,7 @@ type netServerModuleMock struct {
 	protoHandler func(yaml.MapSlice, []byte) []byte
 }
 
-func (m *netServerModuleMock) HandleJson(configMapSlice yaml.MapSlice, bytes []byte) []byte {
+func (m *netServerModuleMock) HandleJSON(configMapSlice yaml.MapSlice, bytes []byte) []byte {
 	return m.jsonHandler(configMapSlice, bytes)
 }
 

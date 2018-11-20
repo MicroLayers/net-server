@@ -80,7 +80,7 @@ func (l *SocketListener) Listen(messageType string, configMapSlice yaml.MapSlice
 				var response []byte
 				switch messageType {
 				case module.MessageTypeJSON:
-					response = l.Module.HandleJson(configMapSlice, message)
+					response = l.Module.HandleJSON(configMapSlice, message)
 				case module.MessageTypeProto:
 					response = l.Module.HandleProto(configMapSlice, message)
 				}

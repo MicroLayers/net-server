@@ -16,7 +16,7 @@ const MessageTypeProto = "proto"
 // NetServerModule add features to the main server
 // exported objects must be named
 type NetServerModule interface {
-	HandleJson(yaml.MapSlice, []byte) []byte  // HandleJson add support for JSON messages
+	HandleJSON(yaml.MapSlice, []byte) []byte  // HandleJSON add support for JSON messages
 	HandleProto(yaml.MapSlice, []byte) []byte // HandleProto add support for protobuf messages
 }
 

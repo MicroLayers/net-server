@@ -10,7 +10,7 @@ func echo(rawConfig yaml.MapSlice, data []byte) []byte {
 	return data
 }
 
-func (m *EchoModule) HandleJson(rawConfig yaml.MapSlice, data []byte) []byte {
+func (m *EchoModule) HandleJSON(rawConfig yaml.MapSlice, data []byte) []byte {
 	return echo(rawConfig, data)
 }
 

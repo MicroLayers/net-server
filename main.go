@@ -12,7 +12,6 @@ import (
 	"net-server/module"
 
 	log "github.com/sirupsen/logrus"
-	yaml "gopkg.in/yaml.v2"
 )
 
 func sigintTrap(ctx context.Context) context.Context {
@@ -33,7 +32,6 @@ func sigintTrap(ctx context.Context) context.Context {
 func startServers(
 	ctx context.Context,
 	configuration configuration.Configuration,
-	configMapSlice yaml.MapSlice,
 	mod module.NetServerModule,
 ) {
 	serversWaitGroup := sync.WaitGroup{}
@@ -50,7 +48,6 @@ func startServers(
 				mod,
 				configuration.Server.Listen.Unix.Socket,
 				configuration.Server.Listen.Unix.Protocol,
-				configMapSlice,
 			)
 			if err != nil {
 				log.WithFields(log.Fields{
@@ -87,5 +84,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	startServers(ctx, configuration, confMapSlice, mod)
+	mod.Init(confMapSlice)
+
+	startServers(ctx, configuration, mod)
 }

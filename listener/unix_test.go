@@ -13,13 +13,11 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	yaml "gopkg.in/yaml.v2"
 )
 
 func TestUnixListenerWillListenOnUnixSocket(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	expectedResponse := []byte{1, 2, 3, 4, 5}
-	configMapSlice := yaml.MapSlice{yaml.MapItem{Key: "var", Value: "val"}}
 	messageType := module.MessageTypeJSON
 	tmpDir, err := ioutil.TempDir(os.TempDir(), "net-server_")
 	assert.NoError(t, err, "The test should successfully create a temporary directory")
@@ -32,10 +30,10 @@ func TestUnixListenerWillListenOnUnixSocket(t *testing.T) {
 	assert.NoError(t, err, "The test should succesfully create the old socket file")
 	oldFile.Close()
 
-	mod := getEchoModMock(t, expectedResponse, expectedResponse, configMapSlice)
+	mod := getEchoModMock(t, expectedResponse, expectedResponse)
 
 	go func() {
-		err = listener.ListenUnix(ctx, mod, socketPath, messageType, configMapSlice)
+		err = listener.ListenUnix(ctx, mod, socketPath, messageType)
 		assert.NoError(t, err, "The listener should terminate in a clean way")
 	}()
 

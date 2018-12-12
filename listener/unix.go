@@ -5,8 +5,6 @@ import (
 	"net"
 	"net-server/module"
 	"os"
-
-	yaml "gopkg.in/yaml.v2"
 )
 
 // ListenUnix listen to a Unix socket,
@@ -16,7 +14,6 @@ func ListenUnix(
 	mod module.NetServerModule,
 	socketPath string,
 	messageType string,
-	configMapSlice yaml.MapSlice,
 ) error {
 	// Remove socket file if exists
 	// net.Listen will fail in case socket file can't be deleted
@@ -36,5 +33,5 @@ func ListenUnix(
 
 	unixListener := NewSocketListener(ctx, listener, mod)
 
-	return unixListener.Listen(messageType, configMapSlice)
+	return unixListener.Listen(messageType)
 }

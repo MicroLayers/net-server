@@ -10,7 +10,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	yaml "gopkg.in/yaml.v2"
 )
 
 func setupClientServer(t *testing.T) (net.Listener, net.Conn) {
@@ -24,8 +23,7 @@ func setupClientServer(t *testing.T) (net.Listener, net.Conn) {
 
 func TestSocketListener_WillListenForJSONMessages(t *testing.T) {
 	expectedResponse := []byte{1, 2, 3, 4, 5}
-	configMapSlice := yaml.MapSlice{yaml.MapItem{Key: "var", Value: "val"}}
-	modMock := getEchoModMock(t, expectedResponse, []byte{}, configMapSlice)
+	modMock := getEchoModMock(t, expectedResponse, []byte{})
 
 	tcpListener, clientConn := setupClientServer(t)
 
@@ -41,7 +39,7 @@ func TestSocketListener_WillListenForJSONMessages(t *testing.T) {
 
 	waitGroup.Add(1)
 	go func() {
-		listenerErr = listener.Listen(module.MessageTypeJSON, configMapSlice)
+		listenerErr = listener.Listen(module.MessageTypeJSON)
 
 		waitGroup.Done()
 	}()
@@ -72,9 +70,8 @@ func TestSocketListener_WillListenForJSONMessages(t *testing.T) {
 
 func TestSocketListener_WillListenForProtoMessages(t *testing.T) {
 	expectedResponse := []byte{42, 92, 73, 54, 7}
-	configMapSlice := yaml.MapSlice{yaml.MapItem{Key: "var", Value: "val"}}
 
-	modMock := getEchoModMock(t, []byte{}, expectedResponse, configMapSlice)
+	modMock := getEchoModMock(t, []byte{}, expectedResponse)
 
 	tcpListener, clientConn := setupClientServer(t)
 
@@ -90,7 +87,7 @@ func TestSocketListener_WillListenForProtoMessages(t *testing.T) {
 
 	waitGroup.Add(1)
 	go func() {
-		listenerErr = listener.Listen(module.MessageTypeProto, configMapSlice)
+		listenerErr = listener.Listen(module.MessageTypeProto)
 
 		waitGroup.Done()
 	}()

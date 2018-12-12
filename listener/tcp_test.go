@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	yaml "gopkg.in/yaml.v2"
 )
 
 func getFreeTCPPort() (int, error) {
@@ -32,16 +31,15 @@ func getFreeTCPPort() (int, error) {
 func TestTCPListenerWillListenOnTCPPort(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	expectedResponse := []byte{1, 2, 3, 4, 5}
-	configMapSlice := yaml.MapSlice{yaml.MapItem{Key: "var", Value: "val"}}
 	messageType := module.MessageTypeJSON
 	freePort, err := getFreeTCPPort()
 	assert.NoError(t, err)
 	listeningAddress := fmt.Sprintf("localhost:%d", freePort)
 
-	mod := getEchoModMock(t, expectedResponse, expectedResponse, configMapSlice)
+	mod := getEchoModMock(t, expectedResponse, expectedResponse)
 
 	go func() {
-		err = listener.ListenTCP(ctx, mod, listeningAddress, messageType, configMapSlice)
+		err = listener.ListenTCP(ctx, mod, listeningAddress, messageType)
 		assert.NoError(t, err, "The listener should terminate in a clean way")
 	}()
 

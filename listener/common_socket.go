@@ -10,7 +10,6 @@ import (
 	"sync"
 
 	log "github.com/sirupsen/logrus"
-	yaml "gopkg.in/yaml.v2"
 )
 
 // SocketListener the socket listener struct
@@ -21,7 +20,7 @@ type SocketListener struct {
 }
 
 // Listen listen for messages of the given type, passing the MapSlice to the module
-func (l *SocketListener) Listen(messageType string, configMapSlice yaml.MapSlice) error {
+func (l *SocketListener) Listen(messageType string) error {
 	messageProcessingWaitGroup := sync.WaitGroup{}
 	shouldContinue := true
 	for shouldContinue {
@@ -80,9 +79,9 @@ func (l *SocketListener) Listen(messageType string, configMapSlice yaml.MapSlice
 				var response []byte
 				switch messageType {
 				case module.MessageTypeJSON:
-					response = l.Module.HandleJSON(configMapSlice, message)
+					response = l.Module.HandleJSON(message)
 				case module.MessageTypeProto:
-					response = l.Module.HandleProto(configMapSlice, message)
+					response = l.Module.HandleProto(message)
 				}
 
 				if len(response) > 0 {
